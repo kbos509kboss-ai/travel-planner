@@ -1,204 +1,110 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="اسمك هنا">
-<title>مشروع خطة السفر الذكية | عملات متعددة</title>
-<style>
-:root{--primary:#667eea;--secondary:#764ba2;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Tahoma; background:linear-gradient(135deg,var(--primary),var(--secondary));min-height:100vh;padding:20px}
-.container{max-width:900px;margin:0 auto;background:#fff;padding:35px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-header{text-align:center;margin-bottom:30px;border-bottom:3px solid var(--primary);padding-bottom:20px}
-h1{color:var(--primary);font-size:2.2em;margin-bottom:10px}
-.project-info{background:#f0f9ff;border:2px solid #3b82f6;padding:15px;border-radius:10px;margin:20px 0;text-align:center}
-label{display:block;margin:12px 0 6px;font-weight:bold;color:#1f2937;font-size:1.05em}
-input,select,button{width:100%;padding:14px;margin-bottom:18px;border:2px solid #e5e7eb;border-radius:12px;font-size:16px}
-button{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;border:none;cursor:pointer;font-weight:bold;font-size:1.1em;margin-top:10px}
-button:hover{transform:translateY(-2px)}
-#result{margin-top:30px;padding:25px;background:#f8f9ff;border-radius:15px;border-right:5px solid var(--primary);display:none}
-.info{background:#fff;padding:18px;margin:15px 0;border-radius:12px;border:1px solid #e5e7eb}
-.info h3{color:var(--secondary);margin:0 0 12px;display:flex;align-items:center;gap:10px;font-size:1.2em}
-.price{color:var(--success);font-weight:bold;font-size:1.4em}
-.tag{background:#e0e7ff;color:#4338ca;padding:4px 12px;border-radius:20px;font-size:0.9em;margin:4px;display:inline-block}
-.link{color:#2563eb;text-decoration:none;font-weight:bold}
-.badge{background:#dcfce7;color:#166534;padding:3px 10px;border-radius:12px;font-size:0.85em;font-weight:bold}
-.badge-warning{background:#fef3c7;color:#92400e}
-.badge-danger{background:#fee2e2;color:#991b1b}
-.cities-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:15px 0}
-.city-card{background:#f3f4f6;padding:12px;border-radius:10px;border:2px solid #e5e7eb;cursor:pointer;text-align:center;transition:all.2s}
-.city-card:hover,.city-card.selected{background:var(--primary);color:#fff;border-color:var(--primary);transform:scale(1.05)}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطة السفر الذكية - AI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        h1 { color: #667eea; text-align: center; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; }
+        input, select, textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; }
+        button { width: 100%; padding: 15px; background: #667eea; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #5568d3; }
+        .result, .ai-box { margin-top: 30px; padding: 20px; background: #f0f4ff; border-radius: 10px; }
+        .ai-box { background: #fff3e0; border: 2px solid #ff9800; }
+        .result { display: none; }
+        .ai-response { margin-top: 15px; white-space: pre-wrap; line-height: 1.8; }
+        .loading { display: none; text-align: center; color: #ff9800; }
+    </style>
 </head>
 <body>
-<div class="container">
-<header>
-<h1>✈️ مشروع خطة السفر الذكية</h1>
-<p class="subtitle">50 دولة | العملة المحلية | تأشيرات مفصلة | أرخص طيران</p>
-</header>
+    <div class="container">
+        <h1>✈️ خطة السفر الذكية - AI</h1>
+        <p class="subtitle">مشروع تطبيقات الذكاء الاصطناعي - مستشار سفر ذكي</p>
+        
+        <div class="form-group">
+            <label>اختر الدولة:</label>
+            <select id="country">
+                <option value="الإمارات">الإمارات 🇦🇪</option>
+                <option value="تركيا">تركيا 🇹🇷</option>
+                <option value="بريطانيا">بريطانيا 🇬🇧</option>
+                <option value="تايلاند">تايلاند 🇹🇭</option>
+                <option value="ماليزيا">ماليزيا 🇲🇾</option>
+            </select>
+        </div>
 
-<div class="project-info">
-<b>مشروع مقدم إلى: سعادة الدكتور/ اسم الدكتور المحترم</b><br>
-<b>إعداد الطالب:</b> اسمك هنا | <b>الرقم الجامعي:</b> 12345678
-</div>
+        <div class="form-group">
+            <label>عدد الأيام:</label>
+            <input type="number" id="days" value="7" min="1">
+        </div>
 
-<label>1. مسافر من أي دولة:</label>
-<select id="fromCountry"></select>
+        <div class="form-group">
+            <label>ميزانيتك الإجمالية (ريال):</label>
+            <input type="number" id="budget" value="5000" min="0">
+        </div>
 
-<label>2. اختر الدولة اللي تبي تسافر لها:</label>
-<select id="country" onchange="showCities()">
-<option value="">-- اختر الدولة --</option>
-</select>
+        <button onclick="calculate()">1. احسب الميزانية</button>
+        <button onclick="askAI()" style="background: #ff9800;">2. اسأل المستشار الذكي 🤖</button>
 
-<div id="citiesContainer" style="display:none;">
-<label>3. اختر المدينة أو اتركها "كل المدن":</label>
-<div class="cities-grid" id="citiesGrid"></div>
-</div>
+        <div class="result" id="result">
+            <h3>📊 تفاصيل الميزانية</h3>
+            <div id="resDetails"></div>
+        </div>
 
-<label>4. عدد أيام الرحلة:</label>
-<input type="number" id="days" value="7" min="1" max="90">
+        <div class="ai-box">
+            <h3>🤖 مستشار السفر بالذكاء الاصطناعي</h3>
+            <p style="font-size:14px; color:#666; margin:10px 0;">اكتب سؤالك: مثال "وش أفضل الأماكن في تركيا بـ 5000 ريال؟"</p>
+            <textarea id="aiQuestion" rows="3" placeholder="اسأل الذكاء الاصطناعي عن رحلتك..."></textarea>
+            <div class="loading" id="loading">جاري التفكير... 🤔</div>
+            <div class="ai-response" id="aiResponse"></div>
+        </div>
+    </div>
 
-<label>5. مستوى الميزانية اليومية:</label>
-<select id="budget">
-<option value="low">اقتصادية | هوستل + أكل شعبي + مواصلات عامة</option>
-<option value="mid" selected>متوسطة | فنادق 3-4 نجوم + مطاعم + تاكسي</option>
-<option value="high">فخمة | فنادق 5 نجوم + مطاعم راقية + سيارة خاصة</option>
-</select>
+    <script>
+        function calculate() {
+            const country = document.getElementById('country').value;
+            const days = parseInt(document.getElementById('days').value);
+            const budget = parseInt(document.getElementById('budget').value);
+            const perDay = Math.floor(budget / days);
+            
+            document.getElementById('resDetails').innerHTML = `
+                <p><strong>الدولة:</strong> ${country}</p>
+                <p><strong>الميزانية اليومية المتاحة:</strong> ${perDay} ريال</p>
+                <p><strong>الإجمالي:</strong> ${budget} ريال لـ ${days} أيام</p>
+            `;
+            document.getElementById('result').style.display = 'block';
+        }
 
-<button onclick="generatePlan()">🔍 اعطني الخطة الكاملة بأرخص طيران</button>
-<div id="result"></div>
-</div>
+        async function askAI() {
+            const question = document.getElementById('aiQuestion').value;
+            const country = document.getElementById('country').value;
+            const days = document.getElementById('days').value;
+            const budget = document.getElementById('budget').value;
+            
+            if(!question) {
+                alert('اكتب سؤالك أول');
+                return;
+            }
 
-<script>
-// قاعدة البيانات - كل دولة بعملتها
-const countriesData={
-"السعودية":{code:"SA",currency:"ريال",currencyCode:"SAR",cities:[{name:"الرياض",code:"RUH"},{name:"جدة",code:"JED"},{name:"الدمام",code:"DMM"}],sim:"STC 10GB بـ 35 ريال",visa:{type:"مواطن",cost:0,method:"بدون تأشيرة",note:"أنت في بلدك"},budget:{low:200,mid:500,high:1200},tip:"البنزين رخيص استأجر سيارة"},
-"الإمارات":{code:"AE",currency:"درهم",currencyCode:"AED",cities:[{name:"دبي",code:"DXB"},{name:"أبوظبي",code:"AUH"}],sim:"Du 2GB/يوم بـ 55 درهم",visa:{type:"بدون تأشيرة",cost:0,method:"مسموح 90 يوم",note:"للخليجيين"},budget:{low:250,mid:600,high:1500},tip:"بطاقة نول للمترو 25 درهم"},
-"قطر":{code:"QA",currency:"ريال قطري",currencyCode:"QAR",cities:[{name:"الدوحة",code:"DOH"}],sim:"Ooredoo 6GB بـ 60 ريال",visa:{type:"بدون تأشيرة",cost:0,method:"مسموح 30 يوم",note:"للسعوديين"},budget:{low:220,mid:550,high:1400},tip:"كورنيش الدوحة مجاني"},
-"الكويت":{code:"KW",currency:"دينار",currencyCode:"KWD",cities:[{name:"الكويت",code:"KWI"}],sim:"Zain 5GB بـ 5 دينار",visa:{type:"بدون تأشيرة",cost:0,method:"مسموح 90 يوم",note:"للسعوديين"},budget:{low:18,mid:45,high:120},tip:"أبراج الكويت بـ 3 دينار"},
-"البحرين":{code:"BH",currency:"دينار",currencyCode:"BHD",cities:[{name:"المنامة",code:"BAH"}],sim:"Batelco 5GB بـ 5 دينار",visa:{type:"بدون تأشيرة",cost:0,method:"مسموح 90 يوم",note:"للسعوديين"},budget:{low:17,mid:42,high:105},tip:"الجسر 2.5 دينار"},
-"عمان":{code:"OM",currency:"ريال عماني",currencyCode:"OMR",cities:[{name:"مسقط",code:"MCT"},{name:"صلالة",code:"SLL"}],sim:"Omantel 5GB بـ 5 ريال",visa:{type:"بدون تأشيرة",cost:0,method:"مسموح 90 يوم",note:"للسعوديين"},budget:{low:19,mid:48,high:120},tip:"خريف صلالة يونيو-سبتمبر"},
-"الأردن":{code:"JO",currency:"دينار",currencyCode:"JOD",cities:[{name:"عمان",code:"AMM"},{name:"البتراء",code:"AMM"},{name:"العقبة",code:"AQJ"}],sim:"Zain 20GB بـ 12 دينار",visa:{type:"بدون تأشيرة",cost:0,method:"مسموح 90 يوم",note:"مجاناً للسعوديين"},budget:{low:25,mid:55,high:150},tip:"جرّب المنسف والكنافة"},
-"مصر":{code:"EG",currency:"جنيه",currencyCode:"EGP",cities:[{name:"القاهرة",code:"CAI"},{name:"شرم الشيخ",code:"SSH"},{name:"الغردقة",code:"HRG"}],sim:"Orange 10GB بـ 300 جنيه",visa:{type:"عند الوصول",cost:25,method:"في المطار - 25$",note:"تأشيرة سياحية 30 يوم"},budget:{low:500,mid:1200,high:3500},tip:"أوبر أأمن من التاكسي"},
-"تركيا":{code:"TR",currency:"ليرة",currencyCode:"TRY",cities:[{name:"اسطنبول",code:"IST"},{name:"أنطاليا",code:"AYT"},{name:"طرابزون",code:"TZX"}],sim:"Turkcell 20GB بـ 200₺",visa:{type:"إلكترونية",cost:60,method:"e-Visa أونلاين - 60$",note:"أو عند الوصول بنفس السعر"},budget:{low:450,mid:1050,high:2700},tip:"Istanbul Card توفر 50%"},
-"ألمانيا":{code:"DE",currency:"يورو",currencyCode:"EUR",cities:[{name:"برلين",code:"BER"},{name:"ميونخ",code:"MUC"},{name:"فرانكفورت",code:"FRA"}],sim:"Vodafone 10GB بـ 25€",visa:{type:"شنغن",cost:80,method:"من السفارة - 80€",note:"تغطي 27 دولة أوروبية"},budget:{low:90,mid:200,high:550},tip:"القطارات دقيقة بالثانية"},
-"بريطانيا":{code:"GB",currency:"باوند",currencyCode:"GBP",cities:[{name:"لندن",code:"LHR"},{name:"مانشستر",code:"MAN"}],sim:"EE 12GB بـ 15£",visa:{type:"مسبقة",cost:115,method:"من السفارة - 115$",note:"تأشيرة 6 شهور"},budget:{low:85,mid:190,high:520},tip:"بطاقة Oyster ضرورية"},
-"روسيا":{code:"RU",currency:"روبل",currencyCode:"RUB",cities:[{name:"موسكو",code:"SVO"},{name:"سانت بطرسبرغ",code:"LED"}],sim:"MTS 15GB بـ 500₽",visa:{type:"إلكترونية",cost:0,method:"e-Visa مجانية",note:"للسعوديين - 16 يوم"},budget:{low:4500,mid:10000,high:27000},tip:"المترو تحفة بـ 55₽"},
-"الهند":{code:"IN",currency:"روبية",currencyCode:"INR",cities:[{name:"نيودلهي",code:"DEL"},{name:"مومباي",code:"BOM"},{name:"جوا",code:"GOI"}],sim:"Airtel 1.5GB/يوم بـ 299₹",visa:{type:"إلكترونية",cost:25,method:"e-Visa أونلاين - 25$",note:"صالحة 30 يوم"},budget:{low:2000,mid:5000,high:15000},tip:"ماء الصنبور ممنوع"},
-"تايلاند":{code:"TH",currency:"بات",currencyCode:"THB",cities:[{name:"بانكوك",code:"BKK"},{name:"بوكيت",code:"HKT"}],sim:"AIS 15GB بـ 299฿",visa:{type:"بدون تأشيرة",cost:0,method:"مسموح 30 يوم",note:"للسعوديين"},budget:{low:1200,mid:2800,high:8000},tip:"المساج بـ 300 بات"},
-"جورجيا":{code:"GE",currency:"لاري",currencyCode:"GEL",cities:[{name:"تبليسي",code:"TBS"},{name:"باتومي",code:"BUS"}],sim:"Magti 10GB بـ 30 لاري",visa:{type:"بدون تأشيرة",cost:0,method:"مسموح 365 يوم",note:"سنة كاملة للسعوديين"},budget:{low:120,mid:280,high:720},tip:"الأكل رخيص"}
-};
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('aiResponse').textContent = '';
 
-// تعبئة القوائم
-const fromSelect=document.getElementById('fromCountry');
-const countrySelect=document.getElementById('country');
-Object.keys(countriesData).sort().forEach(c=>{
-  fromSelect.innerHTML+=`<option value="${c}">${c}</option>`;
-  countrySelect.innerHTML+=`<option value="${c}">${c}</option>`;
-});
-
-let selectedCity=null;
-
-function showCities(){
-  const country=document.getElementById('country').value;
-  const container=document.getElementById('citiesContainer');
-  const grid=document.getElementById('citiesGrid');
-  if(!country){container.style.display='none';return;}
-  const data=countriesData[country];
-  grid.innerHTML='';selectedCity=null;
-  const allCard=document.createElement('div');
-  allCard.className='city-card selected';
-  allCard.innerHTML='<b>كل المدن</b><br><small>العاصمة افتراضياً</small>';
-  allCard.onclick=()=>selectCity(null,allCard);
-  grid.appendChild(allCard);
-  data.cities.forEach(city=>{
-    const card=document.createElement('div');
-    card.className='city-card';
-    card.innerHTML=`<b>${city.name}</b><br><small>${city.code}</small>`;
-    card.onclick=()=>selectCity(city,card);
-    grid.appendChild(card);
-  });
-  container.style.display='block';
-}
-
-function selectCity(city,element){
-  document.querySelectorAll('.city-card').forEach(c=>c.classList.remove('selected'));
-  element.classList.add('selected');
-  selectedCity=city;
-}
-
-function generatePlan(){
-  const fromCountry=document.getElementById('fromCountry').value;
-  const country=document.getElementById('country').value;
-  const n=+document.getElementById('days').value;
-  const b=document.getElementById('budget').value;
-  
-  if(!country){alert('الرجاء اختيار الدولة');return;}
-  
-  const fromData=countriesData[fromCountry];
-  const toData=countriesData[country];
-  const fromCode=fromData.cities[0].code;
-  const toCity=selectedCity||toData.cities[0];
-  const toCode=toCity.code;
-  const toName=selectedCity?toCity.name:`عاصمة ${country}`;
-  
-  // استخدام عملة دولة المغادرة
-  const currency=fromData.currency;
-  const budgetVal=toData.budget[b];
-  const totalCost=budgetVal*n;
-  const btx=b=='low'?'اقتصادية':b=='mid'?'متوسطة':'فخمة';
-  const flightPrice=400; // تقديري بعملة بلد المغادرة
-  const totalAll=totalCost+flightPrice;
-  
-  const skyLink=`https://www.skyscanner.net/transport/flights/${fromCode}/${toCode}/`;
-  const googleLink=`https://www.google.com/travel/flights?q=Flights%20from%20${fromCode}%20to%20${toCode}`;
-  
-  let citiesHTML=toData.cities.map(c=>`<span class="tag">${c.name}</span>`).join('');
-  
-  let visaBadge='';
-  if(toData.visa.type==='بدون تأشيرة'||toData.visa.type==='مواطن'){
-    visaBadge=`<span class="badge">✅ ${toData.visa.method}</span>`;
-  }else if(toData.visa.type==='إلكترونية'||toData.visa.type==='شنغن'||toData.visa.type==='عند الوصول'){
-    visaBadge=`<span class="badge badge-warning">📱 ${toData.visa.method}</span>`;
-  }else{
-    visaBadge=`<span class="badge badge-danger">🏢 ${toData.visa.method}</span>`;
-  }
-  
-  document.getElementById('result').innerHTML=`
-  <h2>📍 رحلتك من ${fromCountry} إلى ${country}</h2>
-  <div class="alert"><b>الوجهة المختارة:</b> ${toName} ${toCode}</div>
-  
-  <div class="info"><h3>🏙️ أفضل المدن السياحية في ${country}</h3><div>${citiesHTML}</div></div>
-  
-  <div class="info"><h3>💰 الميزانية المتوقعة للمعيشة <span class="badge">بـ ${currency}</span></h3>
-  <p><b>مدة الرحلة:</b> ${n} أيام | <b>المستوى:</b> ${btx}</p>
-  <p><b>التكلفة اليومية:</b> ${budgetVal} ${currency}/اليوم</p>
-  <p><b>إجمالي المعيشة:</b> <span class="price">${totalCost.toLocaleString()} ${currency}</span></p>
-  <p><b>تذكرة طيران تقديرية:</b> <span class="price">${flightPrice.toLocaleString()} ${currency}</span></p>
-  <p><b>الإجمالي الكلي:</b> <span class="price">${totalAll.toLocaleString()} ${currency}</span></p>
-  </div>
-  
-  <div class="info"><h3>🛂 تفاصيل التأشيرة للسعوديين ${visaBadge}</h3>
-  <p><b>النوع:</b> ${toData.visa.type}</p>
-  <p><b>التكلفة:</b> ${toData.visa.cost===0?'<span class="price">مجانية</span>':`<span class="price">${toData.visa.cost}$</span>`}</p>
-  <p><b>طريقة التقديم:</b> ${toData.visa.method}</p>
-  <p><b>ملاحظة:</b> ${toData.visa.note}</p>
-  </div>
-  
-  <div class="info"><h3>✈️ أرخص مواقع حجز الطيران</h3>
-  <p><b>1. Skyscanner</b> <span class='badge'>الأفضل</span><br>
-  <a href="${skyLink}" target="_blank" class="link">اضغط هنا: ${fromCode} → ${toCode}</a></p>
-  <p><b>2. Google Flights</b> <span class='badge'>مخطط الأسعار</span><br>
-  <a href="${googleLink}" target="_blank" class="link">اضغط هنا: ${fromCode} → ${toCode}</a></p>
-  </div>
-  
-  <div class="info"><h3>📱 أفضل شريحة إنترنت في ${country}</h3><p><b>${toData.sim}</b></p></div>
-  <div class="info"><h3>💡 نصيحة ذهبية</h3><p>${toData.tip}</p></div>
-  `;
-  document.getElementById('result').style.display='block';
-  result.scrollIntoView({behavior:'smooth'});
-}
-</script>
+            // هنا تربط مع API حقيقي. هذا مثال وهمي للعرض
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('aiResponse').textContent = 
+                `بناءً على ميزانيتك ${budget} ريال لـ ${days} أيام في ${country}:\n\n` +
+                `1. أنصحك بالسكن في مناطق متوسطة السعر لتوفير 30% من الميزانية.\n` +
+                `2. أفضل وقت للزيارة هو خارج المواسم السياحية.\n` +
+                `3. خصص 20% من ميزانيتك للطوارئ والتسوق.\n\n` +
+                `*ملاحظة: هذه نسخة تجريبية. للربط مع ChatGPT حقيقي تحتاج API Key مجاني من OpenAI*`;
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
